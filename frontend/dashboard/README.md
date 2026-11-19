@@ -4,7 +4,7 @@ This is the browser frontend for the PulseDC demo. It reads dashboard data from 
 
 ## Run
 
-1. Start the backend using `PulseDC-backend\start_backend.bat`.
+1. Start the backend using `..\..\backend\start_backend.bat`.
 2. In this folder, run:
 
    ```powershell

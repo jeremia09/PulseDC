@@ -21,7 +21,7 @@ py -3.11 -m venv venv
 .\venv\Scripts\pip install -r requirements.txt
 ```
 
-Create a `.env` file in the `PulseDC-backend` root folder containing:
+Create a `.env` file in the `backend/` folder containing:
 
 ```env
 FLASK_SECRET_KEY=any-long-random-local-demo-value
@@ -44,7 +44,7 @@ Double-click `start_backend.bat`, or run:
 
 The API runs at `http://127.0.0.1:5001`.
 
-In a second terminal, open the `../PulseDC-frontend/dashboard` folder and run `npm start`. Then open `http://127.0.0.1:3000`.
+In a second terminal, open the `../frontend/dashboard` folder and run `npm start`. Then open `http://127.0.0.1:3000`.
 
 ---
 

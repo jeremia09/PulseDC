@@ -9,7 +9,7 @@ PulseDC is an enterprise-grade IoT telemetry monitoring and facilities managemen
 ```
 PulseDC/
 ├── backend/            # Flask REST API, SQLite database, ML forecasting, and dual-engine AI services
-└── frontend/           # Vanilla JS / Vite dashboard interface with interactive charts & AI assistant
+└── frontend/           # Static HTML/CSS/Vanilla JS dashboard served locally (or with npx serve)
 ```
 
 ---
@@ -62,3 +62,4 @@ npm start
 | **Super Admin** | `superadmin` | `super123` | Master control: fleet-wide and facility threshold modifications with passcode confirmation |
 | **Admin** | `admin` | `admin123` | Facility control: individual facility threshold modifications with passcode confirmation |
 | **Client** | `nimbus`, `vertex`, `orion` | `<name>123` | Read-only tenant telemetry monitoring |
+
