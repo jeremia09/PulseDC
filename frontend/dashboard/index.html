@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IoT Pulse DC</title>
+
+  <!-- Apply saved theme immediately, before first paint, to avoid a light-mode flash -->
+  <script>
+    (function () {
+      var t = localStorage.getItem('sentinel-theme');
+      if (t === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    })();
+  </script>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="img/favicon-180x180.png">
+  <link rel="shortcut icon" href="favicon.ico">
+
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Charting library + zoom/pan plugin (for the Compare chart) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/2.0.1/chartjs-plugin-zoom.min.js"></script>
+
+  <!-- Flaticon Uicons -->
+  <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css">
+  <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-solid-rounded/css/uicons-solid-rounded.css">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/alerts/investigation.css">
+</head>
+
+<body>
+
+  <div class="shell">
+    <nav class="sidenav">
+      <div class="brand">Pulse<span>DC</span></div>
+      <div class="nav-item active" data-page="overview" title="System-wide health and quick status"><span class="nav-dot"></span><i class="fi fi-rr-home nav-icon" aria-hidden="true"></i>System Health</div>
+      <div class="nav-item" data-page="drilldown" title="Inspect rooms, cooling, and hardware by facility"><span class="nav-dot"></span><i class="fi fi-rr-search nav-icon" aria-hidden="true"></i>Site Explorer</div>
+      <div class="nav-item" data-page="compare" title="Side-by-side performance trends across rooms or sites"><span class="nav-dot"></span><i class="fi fi-rr-chart-line-up nav-icon" aria-hidden="true"></i>Compare</div>
+      <div class="nav-item" data-page="forecast" title="Early warnings and predictions before issues occur"><span class="nav-dot"></span><i class="fi fi-rr-chart-mixed nav-icon" aria-hidden="true"></i>Future Risk</div>
+      <div class="nav-item" data-page="alerts" title="Active issues that need attention"><span class="nav-dot"></span><i class="fi fi-rr-bell nav-icon" aria-hidden="true"></i>Alerts <span class="nav-alert-badge" id="navAlertBadge" hidden>0</span></div>
+      <div class="nav-item" data-page="investigations" title="Root cause analysis and guided resolution steps"><span class="nav-dot"></span><i class="fi fi-rr-search-alt nav-icon" aria-hidden="true"></i>Assisted Fixes</div>
+      <div class="nav-item" data-page="thresholds" title="Review and manage sensor operating limits"><span class="nav-dot"></span><i class="fi fi-rr-settings nav-icon" aria-hidden="true"></i>Operating Limits</div>
+      <div class="theme-toggle">
+        <span><span class="icon" id="themeIcon"><i class="fi fi-rr-sun"></i></span> <span id="themeLabel">Light</span></span>
+        <button class="switch" id="themeSwitch"><span class="knob" id="themeKnob"><i class="fi fi-rr-moon"></i></span></button>
+      </div>
+      <div class="user-menu">
+        <span id="userInfoLabel">Checking session…</span>
+        <button id="logoutBtn" type="button">Log out</button>
+      </div>
+    </nav>
+
+    <div class="main">
+      <!-- ===================== SYSTEM HEALTH (OVERVIEW) ===================== -->
+      <section class="page active" id="page-overview">
+        <div class="overview-header-row">
+          <div>
+            <h1>System Health</h1>
+            <p class="subtitle">Live status and health overview across all data center facilities.</p>
+          </div>
+          <div class="overview-header-actions">
+            <button class="chart-btn threshold-link" title="Learn what ranges are safe"><i class="fi fi-rr-info"></i> Guide: Safe Ranges</button>
+          </div>
+        </div>
+
+        <!-- Fleet Health Executive Summary Banner -->
+        <div class="fleet-health-banner" id="fleetHealthBanner">
+          <div class="fleet-status-indicator" id="fleetStatusOrb">
+            <span class="fleet-status-icon"><i class="fi fi-rr-shield-check"></i></span>
+          </div>
+          <div class="fleet-status-info">
+            <div class="fleet-status-headline" id="fleetStatusHeadline">Checking system health…</div>
+            <div class="fleet-status-detail" id="fleetStatusDetail">Aggregating live sensor metrics from all data centers.</div>
+          </div>
+          <div class="fleet-actions">
+            <button class="fleet-action-btn secondary" id="fleetViewAlertsBtn" style="display:none;"><i class="fi fi-rr-bell"></i> Review alerts</button>
+            <button class="fleet-action-btn primary" id="fleetCopySummaryBtn" title="Copy an easy-to-read update for sharing with your team"><i class="fi fi-rr-copy"></i> Copy Status Brief</button>
+          </div>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-box clickable" id="ovHealthyBox" title="Click to filter to normal sites">
+            <span class="stat-icon"><i class="fi fi-rr-shield-check"></i></span>
+            <p class="num" id="ovHealthySites">—</p>
+            <p class="lbl">Healthy facilities</p>
+          </div>
+          <div class="stat-box clickable" id="ovActiveAlertsBox" title="Click to view sites needing immediate attention">
+            <span class="stat-icon"><i class="fi fi-rr-triangle-warning"></i></span>
+            <p class="num" id="ovActiveAlerts">—</p>
+            <p class="lbl">Facilities needing attention</p>
+          </div>
+          <div class="stat-box clickable" id="ovTotalSitesBox" title="Total active data centers monitored">
+            <span class="stat-icon"><i class="fi fi-rr-database"></i></span>
+            <p class="num" id="ovTotalSites">—</p>
+            <p class="lbl">Total facilities</p>
+          </div>
+          <div class="stat-box clickable" id="ovClientsBox" title="Click to view client organizations">
+            <span class="stat-icon"><i class="fi fi-rr-building"></i></span>
+            <p class="num" id="ovTotalClients">—</p>
+            <p class="lbl">Organizations</p>
+          </div>
+        </div>
+
+        <div class="overview-grid">
+          <div class="card facility-status-card">
+            <div class="card-header">
+              <div>
+                <h2>Facility status</h2>
+                <span class="meta">Choose a facility to view its sensor readings</span>
+              </div>
+              <div class="site-filter-pills" id="siteFilterPills">
+                <button class="filter-chip active" data-site-filter="all">All Sites</button>
+                <button class="filter-chip" data-site-filter="alert">Needs Attention</button>
+                <button class="filter-chip" data-site-filter="ok">Healthy</button>
+              </div>
+            </div>
+            <div class="facility-grid-shell">
+              <div class="site-readings-backdrop" aria-hidden="true"></div>
+              <div class="site-grid" id="siteGrid">
+                <!-- Initial Skeleton Shimmer Cards -->
+                <div class="site-card skeleton-shimmer" style="height:190px;opacity:0.7"></div>
+                <div class="site-card skeleton-shimmer" style="height:190px;opacity:0.7"></div>
+                <div class="site-card skeleton-shimmer" style="height:190px;opacity:0.7"></div>
+                <div class="site-card skeleton-shimmer" style="height:190px;opacity:0.7"></div>
+                <div class="site-card skeleton-shimmer" style="height:190px;opacity:0.7"></div>
+                <div class="site-card skeleton-shimmer" style="height:190px;opacity:0.7"></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <details class="overview-live-details">
+          <summary><i class="fi fi-rr-chart-line-up" aria-hidden="true"></i> View live sensor activity</summary>
+          <div class="live-panel">
+            <div class="live-panel-header">
+              <div>
+                <h2><span class="pulse-dot" id="pulseDot"></span>Live Activity Stream</h2>
+                <p class="meta" style="margin:2px 0 0">Real-time updates on room and facility conditions</p>
+              </div>
+              <div class="live-controls">
+                <button class="live-btn" id="liveToggleBtn">Pause</button>
+              </div>
+            </div>
+            <div class="live-feed" id="liveFeed"></div>
+          </div>
+        </details>
+      </section>
+
+      <!-- Client info modal, triggered from the "Clients" stat box on Overview -->
+      <div class="modal-overlay" id="clientModal">
+        <div class="modal-box">
+          <div class="modal-header">
+            <h2 id="clientModalTitle">Clients</h2>
+            <button class="modal-close" id="clientModalClose">✕</button>
+          </div>
+          <div id="clientModalBody"></div>
+        </div>
+      </div>
+
+      <!-- ===================== COMPARE ===================== -->
+      <section class="page" id="page-compare">
+        <h1>Performance Comparisons</h1>
+        <p class="subtitle">See how different rooms and facilities perform side-by-side over time to spot outliers.</p>
+
+        <div class="topbar" id="compareTopbar">
+          <div class="metric-tabs" id="compareModeTabs"></div>
+          <select id="compareRoomSelect" style="display:none"></select>
+          <select id="compareRoomSelectB" style="display:none"></select>
+          <select id="compareSiteSelect" style="display:none"></select>
+          <div class="chart-actions-toolbar" style="margin-left:auto">
+            <button class="btn-export" id="compareExportCsvBtn" title="Export current comparison series as CSV"><i class="fi fi-rr-file-csv"></i> Export CSV</button>
+            <button class="btn-export" id="compareExportPngBtn" title="Download chart image"><i class="fi fi-rr-picture"></i> Export PNG</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="metric-tabs" id="compareTabs"></div>
+          <div class="chart-controls" id="compareControls"></div>
+          <p class="chart-hint" id="compareSummary" style="margin:0 0 10px;font-weight:500"></p>
+          <p class="chart-hint" id="compareRangeLine" style="margin:0 0 10px;color:var(--text-muted)"></p>
+          <canvas id="compareChart" height="90"></canvas>
+          <div class="legend-row" id="compareLegend"></div>
+          <div class="legend-row" id="compareRoomKey" style="display:none;margin-top:8px"></div>
+          <p class="chart-hint" id="compareHint">Hover over any line to see exact numbers · Pinch or scroll to zoom · Click site chips below to filter</p>
+        </div>
+
+        <div class="card" id="compareRoomGrid" style="display:none"></div>
+        <div id="compareRoomCrossGrid" style="display:none"></div>
+      </section>
+
+      <!-- ===================== DRILLDOWN ===================== -->
+      <section class="page" id="page-drilldown">
+        <h1>Site Explorer</h1>
+        <p class="subtitle">Inspect a specific facility and room to verify cooling flow, room temperature, and air quality.</p>
+
+        <div class="topbar">
+          <select id="clientSelect"></select>
+          <select id="dcSelect"></select>
+          <select id="roomSelect"></select>
+          <span id="dcStatusPill" class="status-pill ok">Normal</span>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h2 id="dcTitle">—</h2>
+            <span class="meta" id="dcLocation">—</span>
+          </div>
+          <p class="chart-hint" id="roomMeta" style="margin:-4px 0 12px"></p>
+          <table>
+            <thead>
+              <tr>
+                <th style="width:28%">Component / Metric</th>
+                <th style="width:16%">Current Reading</th>
+                <th style="width:18%">Trend Direction</th>
+                <th style="width:14%">Health Status</th>
+                <th style="width:24%"></th>
+              </tr>
+            </thead>
+            <tbody id="metricTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ===================== FORECAST ===================== -->
+      <section class="page" id="page-forecast">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <div>
+            <h1>Future Risk & Predictions</h1>
+            <p class="subtitle">Early warning forecast based on recent trends — alerting you days before equipment exceeds safe limits.</p>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <button class="btn-export" id="forecastExportCsvBtn" title="Export sensor forecast numbers as CSV"><i class="fi fi-rr-file-csv"></i> Export CSV</button>
+            <button class="btn-export" id="forecastExportPngBtn" title="Download forecast chart image"><i class="fi fi-rr-picture"></i> Export PNG</button>
+            <button class="chart-btn threshold-link"><i class="fi fi-rr-info"></i> Safe Ranges</button>
+          </div>
+        </div>
+
+        <div class="layout">
+          <div class="card">
+            <h2 style="margin-bottom:12px">Sites ranked by risk</h2>
+            <div id="rankList"></div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h2 id="fcTitle">—</h2>
+              <span class="meta" id="fcMeta">—</span>
+            </div>
+            <div class="metric-tabs" id="fcMetricTabs"></div>
+            <canvas id="forecastChart" height="90"></canvas>
+            <div class="stat-grid2" id="fcStatGrid"></div>
+            <p id="fcProvenance" class="forecast-provenance"></p>
+            <div id="fcCallout"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== ALERTS ===================== -->
+      <section class="page" id="page-alerts">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <div>
+            <h1>Active Alerts & Incidents</h1>
+            <p class="subtitle">Real-time notifications for temperature spikes, low coolant flow, or pressure anomalies.</p>
+          </div>
+          <button class="chart-btn threshold-link"><i class="fi fi-rr-info"></i> Safe Ranges</button>
+        </div>
+
+        <div class="summary">
+          <div class="summary-box critical" title="Immediate action needed">
+            <p class="count" id="countCritical">0</p>
+            <p class="label">Needs Urgent Action</p>
+          </div>
+          <div class="summary-box warning" title="Approaching limits — keep an eye">
+            <p class="count" id="countWarning">0</p>
+            <p class="label">Warnings to Watch</p>
+          </div>
+          <div class="summary-box resolved" title="Handled or cleared issues">
+            <p class="count" id="countResolved">0</p>
+            <p class="label">Resolved</p>
+          </div>
+        </div>
+
+        <div class="filters" id="alertFilters"></div>
+        <div class="feed" id="alertFeed"></div>
+      </section>
+
+      <!-- ===================== INVESTIGATIONS ===================== -->
+      <section class="page" id="page-investigations">
+        <div class="investigation-page-header">
+          <div>
+            <h1>Assisted Fixes & Guided Actions</h1>
+            <p class="subtitle">Diagnostic root cause analysis and step-by-step checklists to resolve incidents.</p>
+          </div>
+          <button class="chart-btn" type="button" data-page-link="alerts"><i class="fi fi-rr-arrow-left"></i> Back to Alerts</button>
+        </div>
+        <div class="investigation-workspace">
+          <aside class="investigation-inbox" aria-label="Alerts to review">
+            <h2>Choose an alert</h2>
+            <p class="meta">Select an alert to see its review.</p>
+            <div id="investigationInbox" class="investigation-inbox-list"></div>
+          </aside>
+          <section id="investigationDetail" class="investigation-detail" aria-live="polite">
+            <div class="investigation-empty-state">
+              <span class="investigation-empty-icon" aria-hidden="true"><i class="fi fi-rr-check"></i></span>
+              <h2>Choose an alert to review</h2>
+              <p>Select an alert from the list, or open one from the Alerts page.</p>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <!-- ===================== OPERATING LIMITS ===================== -->
+      <section class="page" id="page-thresholds">
+        <div class="operating-limits-header">
+          <div>
+            <h1>Operating Limits</h1>
+            <p class="subtitle">Set the safe range for each sensor. PulseDC uses these limits to identify warnings and critical readings.</p>
+          </div>
+          <label class="limits-scope-control" for="thresholdScopeSelect">
+            <span>Show limits for</span>
+            <select id="thresholdScopeSelect" aria-label="Choose operating limit scope"></select>
+          </label>
+        </div>
+        <div class="limits-scope-summary" id="thresholdScopeSummary"></div>
+        <p class="limits-edit-hint" id="thresholdEditHint">Edit a value, then select <strong>Save limits</strong> to apply it.</p>
+        <div class="operating-limits-grid" id="thresholdCards" aria-live="polite"></div>
+        <div class="limits-page-actions">
+          <p id="thresholdSaveStatus" class="meta" role="status" aria-live="polite">Loading saved operating limits…</p>
+          <div>
+            <button class="chart-btn" id="thresholdResetBtn" type="button" hidden><i class="fi fi-rr-undo" aria-hidden="true"></i> Use fleet-wide limits</button>
+            <button class="chart-btn" id="thresholdSaveBtn" type="button" hidden><i class="fi fi-rr-check" aria-hidden="true"></i> Save limits</button>
+          </div>
+        </div>
+        <section class="limits-history card" id="thresholdHistorySection">
+          <div class="card-header"><div><h2>Change history</h2><p class="meta">A record of who changed a limit and when.</p></div></div>
+          <div class="limits-history-filters" aria-label="Filter change history">
+            <label>Facility<select id="thresholdHistoryFacility"><option value="all">All facilities</option><option value="global">Fleet-wide changes</option></select></label>
+            <label>Sensor type<select id="thresholdHistoryMetric"><option value="all">All sensor types</option></select></label>
+            <label class="limits-history-search">Search<input id="thresholdHistorySearch" type="search" placeholder="Search changes or administrator" autocomplete="off"></label>
+            <button type="button" class="chart-btn" id="thresholdHistoryClear"><i class="fi fi-rr-cross-small" aria-hidden="true"></i> Clear</button>
+          </div>
+          <p class="limits-history-count meta" id="thresholdHistoryCount" aria-live="polite"></p>
+          <ol id="thresholdAuditList" class="limits-history-list"></ol>
+        </section>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- ============================================================
+     CHAT WIDGET — floating assistant bubble + panel. Sits outside the
+     .page containers so it's visible on every tab, not just one.
+     Talks to the Flask backend running at http://127.0.0.1:5001.
+     ============================================================ -->
+  <button id="chatBubble" class="chat-bubble" title="Ask Pulse DC assistant">
+    <!-- Premium gradient orb replaces flat image -->
+    <div class="chat-bubble-orb">
+      <!-- Orbiting teal halo ring -->
+      <div class="chat-bubble-orbit"></div>
+      <!-- Neural-network icon (SVG) -->
+      <svg class="chat-bubble-icon-svg" viewBox="0 0 24 24" aria-hidden="true">
+        <!-- Nodes -->
+        <circle cx="4"  cy="8"  r="1.6"/>
+        <circle cx="4"  cy="16" r="1.6"/>
+        <circle cx="12" cy="4"  r="1.6"/>
+        <circle cx="12" cy="12" r="1.6"/>
+        <circle cx="12" cy="20" r="1.6"/>
+        <circle cx="20" cy="8"  r="1.6"/>
+        <circle cx="20" cy="16" r="1.6"/>
+        <!-- Connections left → centre -->
+        <line x1="5.6"  y1="8"   x2="10.4" y2="4"/>
+        <line x1="5.6"  y1="8"   x2="10.4" y2="12"/>
+        <line x1="5.6"  y1="16"  x2="10.4" y2="12"/>
+        <line x1="5.6"  y1="16"  x2="10.4" y2="20"/>
+        <!-- Connections centre → right -->
+        <line x1="13.6" y1="4"   x2="18.4" y2="8"/>
+        <line x1="13.6" y1="12"  x2="18.4" y2="8"/>
+        <line x1="13.6" y1="12"  x2="18.4" y2="16"/>
+        <line x1="13.6" y1="20"  x2="18.4" y2="16"/>
+      </svg>
+    </div>
+    <!-- Unread badge — made visible via JS when a new message arrives -->
+    <span class="chat-bubble-badge" id="chatUnreadBadge" aria-hidden="true"></span>
+  </button>
+
+  <div id="chatPanel" class="chat-panel">
+    <!-- Resize Handles for 8 Directions -->
+    <div class="chat-resize-handle n" data-dir="n"></div>
+    <div class="chat-resize-handle s" data-dir="s"></div>
+    <div class="chat-resize-handle w" data-dir="w"></div>
+    <div class="chat-resize-handle e" data-dir="e"></div>
+    <div class="chat-resize-handle nw" data-dir="nw"></div>
+    <div class="chat-resize-handle ne" data-dir="ne"></div>
+    <div class="chat-resize-handle sw" data-dir="sw"></div>
+    <div class="chat-resize-handle se" data-dir="se"></div>
+
+    <div class="chat-panel-header" id="chatPanelHeader">
+      <div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <p class="chat-panel-title">Pulse DC Assistant</p>
+          <span id="chatUserBadge" class="chat-user-badge" style="display:none;"></span>
+        </div>
+        <p class="chat-panel-subtitle" id="chatPanelSubtitle">Real-time facility intelligence</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;">
+        <button id="chatExpandBtn" class="chat-header-btn" title="Maximize window">🗖</button>
+        <button id="chatClearBtn" class="chat-header-btn" title="New conversation session">↻</button>
+        <button id="chatCloseBtn" class="chat-close-btn" title="Close">✕</button>
+      </div>
+    </div>
+
+    <div id="chatMessages" class="chat-messages"></div>
+
+    <div id="chatSuggestions" class="chat-suggestions">
+      <button class="chat-suggest-chip" data-query="Are there any urgent issues across our facilities right now?"><i class="fi fi-rr-triangle-warning" aria-hidden="true"></i> Any urgent issues?</button>
+      <button class="chat-suggest-chip" data-query="Explain what is causing the active alerts and what I should tell my maintenance team."><i class="fi fi-rr-search-alt" aria-hidden="true"></i> Resolution checklist</button>
+      <button class="chat-suggest-chip" data-query="Give me an executive summary of fleet health for my team."><i class="fi fi-rr-document" aria-hidden="true"></i> Executive summary</button>
+      <button class="chat-suggest-chip" data-query="Which data center might run into cooling problems this week?"><i class="fi fi-rr-chart-mixed" aria-hidden="true"></i> Predict future problems</button>
+      <button class="chat-suggest-chip" data-query="Are room temperatures normal across all locations?"><i class="fi fi-rr-temperature-high" aria-hidden="true"></i> Check temperatures</button>
+    </div>
+
+    <p id="chatStatus" class="chat-status"></p>
+
+    <!-- Admin Confirmation Modal / Card inside chat panel -->
+    <div id="chatConfirmCard" class="chat-confirm-card" style="display: none;">
+      <div class="chat-confirm-header">
+        <i class="fi fi-rr-shield-check"></i>
+        <span>Admin Authorization Required</span>
+      </div>
+      <p id="chatConfirmPrompt" class="chat-confirm-prompt">Are you sure you would like to make this change?</p>
+      <div id="chatConfirmDetails" class="chat-confirm-details"></div>
+      <div class="chat-confirm-inputs">
+        <input id="chatConfirmPasscode" type="password" placeholder="Key in admin password / passcode…" autocomplete="off" />
+        <div class="chat-confirm-actions">
+          <button id="chatConfirmCancelBtn" type="button" class="chat-btn-cancel">Cancel</button>
+          <button id="chatConfirmSubmitBtn" type="button" class="chat-btn-confirm">Confirm & Apply</button>
+        </div>
+      </div>
+      <p id="chatConfirmError" class="chat-confirm-error" style="display: none;"></p>
+    </div>
+
+    <form id="chatForm" class="chat-input-row">
+      <input id="chatInput" type="text" placeholder="Ask questions or say e.g. 'Change DC-Alpha temperature to 29'…" autocomplete="off" />
+      <button id="chatSendBtn" type="submit" class="chat-send-btn">Ask</button>
+    </form>
+  </div>
+
+  <!-- ============================================================
+     Scripts: main.js loads live simulated data from the Flask dashboard API,
+     loads core modular engines, then initializes view modules.
+     ============================================================ -->
+  <!-- Core Utilities & Engines -->
+  <script src="js/core/utils.js"></script>
+  <script src="js/core/thresholds.js"></script>
+  <script src="js/core/forecast-engine.js"></script>
+  <script src="js/core/simulation-engine.js"></script>
+
+  <!-- View Controllers -->
+  <script src="js/overview.js"></script>
+  <script src="js/compare.js"></script>
+  <script src="js/drilldown.js"></script>
+  <script src="js/forecast.js"></script>
+  <script src="js/alerts/investigation.js"></script>
+  <script src="js/alerts.js"></script>
+
+  <!-- Authentication & Orchestration -->
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+
+  <!-- UI Enhancements & Widgets -->
+  <script src="js/custom-select.js"></script>
+  <script src="js/chatbot.js"></script>
+</body>
+
+</html>

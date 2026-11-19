@@ -1,0 +1,10 @@
+{
+  "name": "pulse-dc-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Pulse DC — static dashboard frontend. Served locally for development.",
+  "scripts": {
+    "start": "npx serve -l tcp://127.0.0.1:3000",
+    "smoke": "node scripts/smoke-check.mjs"
+  }
+}

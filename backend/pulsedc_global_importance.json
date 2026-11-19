@@ -1,0 +1,41 @@
+{
+  "method": "mean |SHAP| over test set, class = anomalous",
+  "features": [
+    {
+      "feature": "value",
+      "importance": 0.095927
+    },
+    {
+      "feature": "rolling_mean_6",
+      "importance": 0.168978
+    },
+    {
+      "feature": "rolling_std_6",
+      "importance": 0.022434
+    },
+    {
+      "feature": "delta_prev",
+      "importance": 0.002542
+    },
+    {
+      "feature": "hour_of_day",
+      "importance": 0.002496
+    },
+    {
+      "feature": "metric_type_FLOW",
+      "importance": 0.210265
+    },
+    {
+      "feature": "metric_type_HUM",
+      "importance": 0.005191
+    },
+    {
+      "feature": "metric_type_TEMP",
+      "importance": 0.087837
+    },
+    {
+      "feature": "metric_type_UNKNOWN",
+      "importance": 0.001033
+    }
+  ]
+}

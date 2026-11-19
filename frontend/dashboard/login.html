@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign in — PulseDC</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="img/favicon-180x180.png">
+  <link rel="shortcut icon" href="favicon.ico">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <main class="login-shell">
+    <div class="login-layout">
+      <section class="login-intro" aria-labelledby="portalTitle">
+        <p class="login-eyebrow"><span class="login-live-dot"></span>Simulated operations environment</p>
+        <h1 id="portalTitle">Infrastructure insight,<br><span>at a glance.</span></h1>
+        <p class="login-intro-copy">Monitor facility health, investigate alerts, and review predictive risk across your data-center fleet.</p>
+        <div class="login-mini-status">
+          <div class="login-status-head"><span>Fleet status</span><strong><i></i> Operational</strong></div>
+          <div class="login-status-rule"></div>
+          <div class="login-mini-metrics">
+            <div><strong>5</strong><span>Sites monitored</span></div>
+            <div><strong>124</strong><span>Live sensors</span></div>
+            <div><strong>1</strong><span>Active alert</span></div>
+          </div>
+        </div>
+        <p class="login-security">⌁ Secure session-based access · Demo telemetry</p>
+      </section>
+
+      <section class="login-card" aria-labelledby="loginTitle">
+        <p class="login-brand"><span class="login-brand-mark">⌁</span>Pulse<span>DC</span></p>
+        <h2 id="loginTitle">Welcome back</h2>
+        <p class="subtitle">Sign in to access your operations dashboard.</p>
+        <form class="login-form" id="loginForm">
+          <label>Username
+            <span class="login-input-wrap"><span aria-hidden="true">◉</span><input id="username" name="username" autocomplete="username" placeholder="Enter your username" required autofocus></span>
+          </label>
+          <label>Password
+            <span class="login-input-wrap"><span aria-hidden="true">▣</span><input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required><button class="password-toggle" id="passwordToggle" type="button" aria-label="Show password">Show</button></span>
+          </label>
+          <p class="login-error" id="loginError" role="alert"></p>
+          <button class="login-submit" id="loginSubmit" type="submit">Sign in <span aria-hidden="true">→</span></button>
+        </form>
+        <p class="login-card-footer">Protected PulseDC demo environment</p>
+      </section>
+    </div>
+  </main>
+  <script src="js/core/utils.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>

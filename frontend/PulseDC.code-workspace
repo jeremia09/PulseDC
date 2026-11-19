@@ -1,0 +1,12 @@
+{
+  "folders": [
+    {
+      "name": "PulseDC Frontend",
+      "path": "."
+    },
+    {
+      "name": "PulseDC Backend",
+      "path": "../PulseDC-backend"
+    }
+  ]
+}

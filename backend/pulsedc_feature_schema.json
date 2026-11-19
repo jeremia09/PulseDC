@@ -1,0 +1,23 @@
+{
+  "numeric_features": [
+    "value",
+    "rolling_mean_6",
+    "rolling_std_6",
+    "delta_prev",
+    "hour_of_day"
+  ],
+  "categorical_features": [
+    "metric_type"
+  ],
+  "feature_columns": [
+    "value",
+    "rolling_mean_6",
+    "rolling_std_6",
+    "delta_prev",
+    "hour_of_day",
+    "metric_type_FLOW",
+    "metric_type_HUM",
+    "metric_type_TEMP",
+    "metric_type_UNKNOWN"
+  ]
+}

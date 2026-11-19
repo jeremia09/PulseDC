@@ -1,0 +1,24 @@
+# Python / Virtual Environments
+**/venv/
+**/.venv/
+**/__pycache__/
+*.pyc
+
+# Environment Secrets (Crucial: never commit API keys or passwords)
+**/.env
+.env.*
+
+# Node / Dependencies
+**/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Database & Runtime State (Keep initial templates, ignore local runtime databases if preferred)
+# data/monitoring.db is tracked for demo seeding
+
+# IDE & OS Files
+.DS_Store
+Thumbs.db
+**/.vscode/
+**/.idea/

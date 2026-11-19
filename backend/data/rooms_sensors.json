@@ -1,0 +1,638 @@
+[
+  {
+    "data_center": "DC-Alpha",
+    "room_code": "101",
+    "name": "Server Room A",
+    "room_type": "server",
+    "floor_level": "Ground Floor",
+    "sensors": [
+      {
+        "sensor_code": "DC-A-101-TEMP-01",
+        "serial_id": "SNS-52445",
+        "name": "Server Room A - Temperature Sensor 1",
+        "metric_type": "temperature",
+        "unit": "\u00b0C"
+      },
+      {
+        "sensor_code": "DC-A-101-HUM-01",
+        "serial_id": "SNS-29772",
+        "name": "Server Room A - Humidity Sensor 1",
+        "metric_type": "humidity",
+        "unit": "%RH"
+      },
+      {
+        "sensor_code": "DC-A-101-PRESS-01",
+        "serial_id": "SNS-61750",
+        "name": "Server Room A - Pressure Sensor 1",
+        "metric_type": "pressure",
+        "unit": "kPa"
+      }
+    ]
+  },
+  {
+    "data_center": "DC-Alpha",
+    "room_code": "201",
+    "name": "Server Room B",
+    "room_type": "server",
+    "floor_level": "Level 2",
+    "sensors": [
+      {
+        "sensor_code": "DC-A-201-TEMP-01",
+        "serial_id": "SNS-95319",
+        "name": "Server Room B - Temperature Sensor 1",
+        "metric_type": "temperature",
+        "unit": "\u00b0C"
+      },
+      {
+        "sensor_code": "DC-A-201-HUM-01",
+        "serial_id": "SNS-16328",
+        "name": "Server Room B - Humidity Sensor 1",
+        "metric_type": "humidity",
+        "unit": "%RH"
+      },
+      {
+        "sensor_code": "DC-A-201-PRESS-01",
+        "serial_id": "SNS-19494",
+        "name": "Server Room B - Pressure Sensor 1",
+        "metric_type": "pressure",
+        "unit": "kPa"
+      }
+    ]
+  },
+  {
+    "data_center": "DC-Alpha",
+    "room_code": "B01",
+    "name": "Mechanical Room",
+    "room_type": "mechanical",
+    "floor_level": "Basement",
+    "sensors": [
+      {
+        "sensor_code": "DC-A-B01-FLOW-01",
+        "serial_id": "SNS-80239",
+        "name": "Mechanical Room - Flow Rate Sensor 1",
+        "metric_type": "flow_rate",
+        "unit": "L/min"
+      },
+      {
+        "sensor_code": "DC-A-B01-TEMP-01",
+        "serial_id": "SNS-22337",
+        "name": "Mechanical Room - Temperature Sensor 1",
+        "metric_type": "temperature",
+        "unit": "\u00b0C"
+      }
+    ]
+  },
+  {
+    "data_center": "DC-Alpha",
+    "room_code": "102",
+    "name": "Electrical Room",
+    "room_type": "electrical",
+    "floor_level": "Ground Floor",
+    "sensors": [
+      {
+        "sensor_code": "DC-A-102-TEMP-01",
+        "serial_id": "SNS-57931",
+        "name": "Electrical Room - Temperature Sensor 1",
+        "metric_type": "temperature",
+        "unit": "\u00b0C"
+      },
+      {
+        "sensor_code": "DC-A-102-HUM-01",
+        "serial_id": "SNS-86387",
+        "name": "Electrical Room - Humidity Sensor 1",
+        "metric_type": "humidity",
+        "unit": "%RH"
+      }
+    ]
+  },
+  {
+    "data_center": "DC-Beta",
+    "room_code": "101",
+    "name": "Server Room A",
+    "room_type": "server",
+    "floor_level": "Ground Floor",
+    "sensors": [
+      {
+        "sensor_code": "DC-B-101-TEMP-01",
+        "serial_id": "SNS-17602",
+        "name": "Server Room A - Temperature Sensor 1",
+        "metric_type": "temperature",
+        "unit": "\u00b0C"
+      },
+      {
+        "sensor_code": "DC-B-101-HUM-01",
+        "serial_id": "SNS-76510",
+        "name": "Server Room A - Humidity Sensor 1",
+        "metric_type": "humidity",
+        "unit": "%RH"
+      },
+      {
+        "sensor_code": "DC-B-101-PRESS-01",
+        "serial_id": "SNS-38140",
+        "name": "Server Room A - Pressure Sensor 1",
+        "metric_type": "pressure",
+        "unit": "kPa"
+      }
+    ]
+  },
+  {
+    "data_center": "DC-Beta",
+    "room_code": "201",
+    "name": "Server Room B",
+    "room_type": "server",
+    "floor_level": "Level 2",
+    "sensors": [
+      {
+        "sensor_code": "DC-B-201-TEMP-01",
+        "serial_id": "SNS-14914",
+        "name": "Server Room B - Temperature Sensor 1",
+        "metric_type": "temperature",
+        "unit": "\u00b0C"
+      },
+      {
+        "sensor_code": "DC-B-201-HUM-01",
+        "serial_id": "SNS-21265",
+        "name": "Server Room B - Humidity Sensor 1",
+        "metric_type": "humidity",
+        "unit": "%RH"
+      },
+      {
+        "sensor_code": "DC-B-201-PRESS-01",
+        "serial_id": "SNS-66838",
+        "name": "Server Room B - Pressure Sensor 1",
+        "metric_type": "pressure",
+        "unit": "kPa"
+      }
+    ]
+  },
+  {
+    "data_center": "DC-Beta",
+    "room_code": "B01",
+    "name": "Mechanical Room",
+    "room_type": "mechanical",
+    "floor_level": "Basement",
+    "sensors": [
+      {
+        "sensor_code": "DC-B-B01-FLOW-01",
+        "serial_id": "SNS-64810",
+        "name": "Mechanical Room - Flow Rate Sensor 1",
+        "metric_type": "flow_rate",
+        "unit": "L/min"
+      },
+      {
+        "sensor_code": "DC-B-B01-TEMP-01",
+        "serial_id": "SNS-19156",
+        "name": "Mechanical Room - Temperature Sensor 1",
+        "metric_type": "temperature",
+        "unit": "\u00b0C"
+      }
+    ]
+  },
+  {
+    "data_center": "DC-Beta",
+    "room_code": "102",
+    "name": "Electrical Room",
+    "room_type": "electrical",
+    "floor_level": "Ground Floor",
+    "sensors": [
+      {
+        "sensor_code": "DC-B-102-TEMP-01",
+        "serial_id": "SNS-41544",
+        "name": "Electrical Room - Temperature Sensor 1",
+        "metric_type": "temperature",
+        "unit": "\u00b0C"
+      },
+      {
+        "sensor_code": "DC-B-102-HUM-01",
+        "serial_id": "SNS-21889",
+        "name": "Electrical Room - Humidity Sensor 1",
+        "metric_type": "humidity",
+        "unit": "%RH"
+      }
+    ]
+  },
+  {
+    "data_center": "DC-Gamma",
+    "room_code": "101",
+    "name": "Server Room A",
+    "room_type": "server",
+    "floor_level": "Ground Floor",
+    "sensors": [
+      {
+        "sensor_code": "DC-G-101-TEMP-01",
+        "serial_id": "SNS-82226",
+        "name": "Server Room A - Temperature Sensor 1",
+        "metric_type": "temperature",
+        "unit": "\u00b0C"
+      },
+      {
+        "sensor_code": "DC-G-101-HUM-01",
+        "serial_id": "SNS-65642",
+        "name": "Server Room A - Humidity Sensor 1",
+        "metric_type": "humidity",
+        "unit": "%RH"
+      },
+      {
+        "sensor_code": "DC-G-101-PRESS-01",
+        "serial_id": "SNS-17747",
+        "name": "Server Room A - Pressure Sensor 1",
+        "metric_type": "pressure",
+        "unit": "kPa"
+      }
+    ]
+  },
+  {
+    "data_center": "DC-Gamma",
+    "room_code": "201",
+    "name": "Server Room B",
+    "room_type": "server",
+    "floor_level": "Level 2",
+    "sensors": [
+      {
+        "sensor_code": "DC-G-201-TEMP-01",
+        "serial_id": "SNS-84115",
+        "name": "Server Room B - Temperature Sensor 1",
+        "metric_type": "temperature",
+        "unit": "\u00b0C"
+      },
+      {
+        "sensor_code": "DC-G-201-HUM-01",
+        "serial_id": "SNS-26226",
+        "name": "Server Room B - Humidity Sensor 1",
+        "metric_type": "humidity",
+        "unit": "%RH"
+      },
+      {
+        "sensor_code": "DC-G-201-PRESS-01",
+        "serial_id": "SNS-39260",
+        "name": "Server Room B - Pressure Sensor 1",
+        "metric_type": "pressure",
+        "unit": "kPa"
+      }
+    ]
+  },
+  {
+    "data_center": "DC-Gamma",
+    "room_code": "B01",
+    "name": "Mechanical Room",
+    "room_type": "mechanical",
+    "floor_level": "Basement",
+    "sensors": [
+      {
+        "sensor_code": "DC-G-B01-FLOW-01",
+        "serial_id": "SNS-92657",
+        "name": "Mechanical Room - Flow Rate Sensor 1",
+        "metric_type": "flow_rate",
+        "unit": "L/min"
+      },
+      {
+        "sensor_code": "DC-G-B01-TEMP-01",
+        "serial_id": "SNS-92238",
+        "name": "Mechanical Room - Temperature Sensor 1",
+        "metric_type": "temperature",
+        "unit": "\u00b0C"
+      }
+    ]
+  },
+  {
+    "data_center": "DC-Gamma",
+    "room_code": "102",
+    "name": "Electrical Room",
+    "room_type": "electrical",
+    "floor_level": "Ground Floor",
+    "sensors": [
+      {
+        "sensor_code": "DC-G-102-TEMP-01",
+        "serial_id": "SNS-86414",
+        "name": "Electrical Room - Temperature Sensor 1",
+        "metric_type": "temperature",
+        "unit": "\u00b0C"
+      },
+      {
+        "sensor_code": "DC-G-102-HUM-01",
+        "serial_id": "SNS-18108",
+        "name": "Electrical Room - Humidity Sensor 1",
+        "metric_type": "humidity",
+        "unit": "%RH"
+      }
+    ]
+  },
+  {
+    "data_center": "DC-Delta",
+    "room_code": "101",
+    "name": "Server Room A",
+    "room_type": "server",
+    "floor_level": "Ground Floor",
+    "sensors": [
+      {
+        "sensor_code": "DC-D-101-TEMP-01",
+        "serial_id": "SNS-85642",
+        "name": "Server Room A - Temperature Sensor 1",
+        "metric_type": "temperature",
+        "unit": "\u00b0C"
+      },
+      {
+        "sensor_code": "DC-D-101-HUM-01",
+        "serial_id": "SNS-86748",
+        "name": "Server Room A - Humidity Sensor 1",
+        "metric_type": "humidity",
+        "unit": "%RH"
+      },
+      {
+        "sensor_code": "DC-D-101-PRESS-01",
+        "serial_id": "SNS-61993",
+        "name": "Server Room A - Pressure Sensor 1",
+        "metric_type": "pressure",
+        "unit": "kPa"
+      }
+    ]
+  },
+  {
+    "data_center": "DC-Delta",
+    "room_code": "201",
+    "name": "Server Room B",
+    "room_type": "server",
+    "floor_level": "Level 2",
+    "sensors": [
+      {
+        "sensor_code": "DC-D-201-TEMP-01",
+        "serial_id": "SNS-16499",
+        "name": "Server Room B - Temperature Sensor 1",
+        "metric_type": "temperature",
+        "unit": "\u00b0C"
+      },
+      {
+        "sensor_code": "DC-D-201-HUM-01",
+        "serial_id": "SNS-38977",
+        "name": "Server Room B - Humidity Sensor 1",
+        "metric_type": "humidity",
+        "unit": "%RH"
+      },
+      {
+        "sensor_code": "DC-D-201-PRESS-01",
+        "serial_id": "SNS-16105",
+        "name": "Server Room B - Pressure Sensor 1",
+        "metric_type": "pressure",
+        "unit": "kPa"
+      }
+    ]
+  },
+  {
+    "data_center": "DC-Delta",
+    "room_code": "B01",
+    "name": "Mechanical Room",
+    "room_type": "mechanical",
+    "floor_level": "Basement",
+    "sensors": [
+      {
+        "sensor_code": "DC-D-B01-FLOW-01",
+        "serial_id": "SNS-82963",
+        "name": "Mechanical Room - Flow Rate Sensor 1",
+        "metric_type": "flow_rate",
+        "unit": "L/min"
+      },
+      {
+        "sensor_code": "DC-D-B01-TEMP-01",
+        "serial_id": "SNS-27455",
+        "name": "Mechanical Room - Temperature Sensor 1",
+        "metric_type": "temperature",
+        "unit": "\u00b0C"
+      }
+    ]
+  },
+  {
+    "data_center": "DC-Delta",
+    "room_code": "102",
+    "name": "Electrical Room",
+    "room_type": "electrical",
+    "floor_level": "Ground Floor",
+    "sensors": [
+      {
+        "sensor_code": "DC-D-102-TEMP-01",
+        "serial_id": "SNS-47959",
+        "name": "Electrical Room - Temperature Sensor 1",
+        "metric_type": "temperature",
+        "unit": "\u00b0C"
+      },
+      {
+        "sensor_code": "DC-D-102-HUM-01",
+        "serial_id": "SNS-64937",
+        "name": "Electrical Room - Humidity Sensor 1",
+        "metric_type": "humidity",
+        "unit": "%RH"
+      }
+    ]
+  },
+  {
+    "data_center": "DC-Epsilon",
+    "room_code": "101",
+    "name": "Server Room A",
+    "room_type": "server",
+    "floor_level": "Ground Floor",
+    "sensors": [
+      {
+        "sensor_code": "DC-E-101-TEMP-01",
+        "serial_id": "SNS-28907",
+        "name": "Server Room A - Temperature Sensor 1",
+        "metric_type": "temperature",
+        "unit": "\u00b0C"
+      },
+      {
+        "sensor_code": "DC-E-101-HUM-01",
+        "serial_id": "SNS-80868",
+        "name": "Server Room A - Humidity Sensor 1",
+        "metric_type": "humidity",
+        "unit": "%RH"
+      },
+      {
+        "sensor_code": "DC-E-101-PRESS-01",
+        "serial_id": "SNS-25439",
+        "name": "Server Room A - Pressure Sensor 1",
+        "metric_type": "pressure",
+        "unit": "kPa"
+      }
+    ]
+  },
+  {
+    "data_center": "DC-Epsilon",
+    "room_code": "201",
+    "name": "Server Room B",
+    "room_type": "server",
+    "floor_level": "Level 2",
+    "sensors": [
+      {
+        "sensor_code": "DC-E-201-TEMP-01",
+        "serial_id": "SNS-84830",
+        "name": "Server Room B - Temperature Sensor 1",
+        "metric_type": "temperature",
+        "unit": "\u00b0C"
+      },
+      {
+        "sensor_code": "DC-E-201-HUM-01",
+        "serial_id": "SNS-50433",
+        "name": "Server Room B - Humidity Sensor 1",
+        "metric_type": "humidity",
+        "unit": "%RH"
+      },
+      {
+        "sensor_code": "DC-E-201-PRESS-01",
+        "serial_id": "SNS-83434",
+        "name": "Server Room B - Pressure Sensor 1",
+        "metric_type": "pressure",
+        "unit": "kPa"
+      }
+    ]
+  },
+  {
+    "data_center": "DC-Epsilon",
+    "room_code": "B01",
+    "name": "Mechanical Room",
+    "room_type": "mechanical",
+    "floor_level": "Basement",
+    "sensors": [
+      {
+        "sensor_code": "DC-E-B01-FLOW-01",
+        "serial_id": "SNS-99391",
+        "name": "Mechanical Room - Flow Rate Sensor 1",
+        "metric_type": "flow_rate",
+        "unit": "L/min"
+      },
+      {
+        "sensor_code": "DC-E-B01-TEMP-01",
+        "serial_id": "SNS-33688",
+        "name": "Mechanical Room - Temperature Sensor 1",
+        "metric_type": "temperature",
+        "unit": "\u00b0C"
+      }
+    ]
+  },
+  {
+    "data_center": "DC-Epsilon",
+    "room_code": "102",
+    "name": "Electrical Room",
+    "room_type": "electrical",
+    "floor_level": "Ground Floor",
+    "sensors": [
+      {
+        "sensor_code": "DC-E-102-TEMP-01",
+        "serial_id": "SNS-23507",
+        "name": "Electrical Room - Temperature Sensor 1",
+        "metric_type": "temperature",
+        "unit": "\u00b0C"
+      },
+      {
+        "sensor_code": "DC-E-102-HUM-01",
+        "serial_id": "SNS-86231",
+        "name": "Electrical Room - Humidity Sensor 1",
+        "metric_type": "humidity",
+        "unit": "%RH"
+      }
+    ]
+  },
+  {
+    "data_center": "DC-Zeta",
+    "room_code": "101",
+    "name": "Server Room A",
+    "room_type": "server",
+    "floor_level": "Ground Floor",
+    "sensors": [
+      {
+        "sensor_code": "DC-Z-101-TEMP-01",
+        "serial_id": "SNS-84868",
+        "name": "Server Room A - Temperature Sensor 1",
+        "metric_type": "temperature",
+        "unit": "\u00b0C"
+      },
+      {
+        "sensor_code": "DC-Z-101-HUM-01",
+        "serial_id": "SNS-93743",
+        "name": "Server Room A - Humidity Sensor 1",
+        "metric_type": "humidity",
+        "unit": "%RH"
+      },
+      {
+        "sensor_code": "DC-Z-101-PRESS-01",
+        "serial_id": "SNS-34624",
+        "name": "Server Room A - Pressure Sensor 1",
+        "metric_type": "pressure",
+        "unit": "kPa"
+      }
+    ]
+  },
+  {
+    "data_center": "DC-Zeta",
+    "room_code": "201",
+    "name": "Server Room B",
+    "room_type": "server",
+    "floor_level": "Level 2",
+    "sensors": [
+      {
+        "sensor_code": "DC-Z-201-TEMP-01",
+        "serial_id": "SNS-58810",
+        "name": "Server Room B - Temperature Sensor 1",
+        "metric_type": "temperature",
+        "unit": "\u00b0C"
+      },
+      {
+        "sensor_code": "DC-Z-201-HUM-01",
+        "serial_id": "SNS-22770",
+        "name": "Server Room B - Humidity Sensor 1",
+        "metric_type": "humidity",
+        "unit": "%RH"
+      },
+      {
+        "sensor_code": "DC-Z-201-PRESS-01",
+        "serial_id": "SNS-81793",
+        "name": "Server Room B - Pressure Sensor 1",
+        "metric_type": "pressure",
+        "unit": "kPa"
+      }
+    ]
+  },
+  {
+    "data_center": "DC-Zeta",
+    "room_code": "B01",
+    "name": "Mechanical Room",
+    "room_type": "mechanical",
+    "floor_level": "Basement",
+    "sensors": [
+      {
+        "sensor_code": "DC-Z-B01-FLOW-01",
+        "serial_id": "SNS-18229",
+        "name": "Mechanical Room - Flow Rate Sensor 1",
+        "metric_type": "flow_rate",
+        "unit": "L/min"
+      },
+      {
+        "sensor_code": "DC-Z-B01-TEMP-01",
+        "serial_id": "SNS-83972",
+        "name": "Mechanical Room - Temperature Sensor 1",
+        "metric_type": "temperature",
+        "unit": "\u00b0C"
+      }
+    ]
+  },
+  {
+    "data_center": "DC-Zeta",
+    "room_code": "102",
+    "name": "Electrical Room",
+    "room_type": "electrical",
+    "floor_level": "Ground Floor",
+    "sensors": [
+      {
+        "sensor_code": "DC-Z-102-TEMP-01",
+        "serial_id": "SNS-17812",
+        "name": "Electrical Room - Temperature Sensor 1",
+        "metric_type": "temperature",
+        "unit": "\u00b0C"
+      },
+      {
+        "sensor_code": "DC-Z-102-HUM-01",
+        "serial_id": "SNS-91134",
+        "name": "Electrical Room - Humidity Sensor 1",
+        "metric_type": "humidity",
+        "unit": "%RH"
+      }
+    ]
+  }
+]
